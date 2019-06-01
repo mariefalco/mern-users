@@ -9,7 +9,8 @@ class Create extends Component {
     this.state = {
       name: "",
       email: "",
-      password: ""
+      password: "",
+      message: ""
     };
   }
   onChange = e => {
@@ -26,15 +27,26 @@ class Create extends Component {
     axios
       .post("/api/home/auth/register", { name, email, password })
       .then(result => {
+        this.setState({ message: "" });
         this.props.history.push("/auth/sign_in");
+      })      
+      .catch(error => {
+        this.setState({
+          message: error.response.data.message
+        });
       });
   };
 
   render() {
-    const { name, email, password } = this.state;
+    const { name, email, password, message } = this.state;
     return (
       <div class="container">
         <form class="form-signin" onSubmit={this.onSubmit}>
+        {message !== "" && (
+            <div class="alert alert-warning alert-dismissible" role="alert">
+              {message}
+            </div>
+          )}
           <h2 class="form-signin-heading">Register</h2>
           <label for="inputName" class="sr-only">
             Name

@@ -14,7 +14,9 @@ const register = (req, res) => {
   newUser
     .save()
     .then(user => res.json(user))
-    .catch(err => res.send(err));
+    .catch(() =>
+      res.status(401).send({ message: "This email already exists." })
+    );
 };
 
 const signIn = (req, res) => {
