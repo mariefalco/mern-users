@@ -62,26 +62,20 @@ class Users extends Component {
               <h3 class="panel-title">USERS LIST</h3>
             </div>
             <div class="panel-body">
-              <table class="table table-stripe">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Hobby</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.users.map(user => (
-                    <tr>
-                      <td>
-                        <Link to={`/users/${user._id}`}>{user.name}</Link>
-                      </td>
-                      <td>{user.email}</td>
-                      <td>{user.hobby}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div class="row border-bottom font-weight-bold">
+                <div class="col">Name</div>
+                <div class="col">Email</div>
+                <div class="col">Hobby</div>
+              </div>
+              {this.state.users.map(user => (
+                <div class="row border-top">
+                  <div class="col">
+                    <Link to={`/users/${user._id}`}>{user.name}</Link>
+                  </div>
+                  <div class="col">{user.email}</div>
+                  <div class="col">{user.hobby}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
