@@ -4,7 +4,7 @@ const mongoose = require("mongoose"),
 const addReq = function(req, res) {
   User.findOneAndUpdate(
     { _id: req.params.userId },
-    { $push: { friend_requests: { id: req.user._id } } },
+    { $push: { friend_requests: req.user._id } },
     { new: true }
   )
     .then(user => res.json(user))
@@ -24,9 +24,10 @@ const addFriend = function(req, res) {
     { $push: { friends: req.params.reqId } },
     { new: true }
   )
-    .then(user =>
-      user.update(
-        { $pull: { friend_requests: { id: req.params.reqId } } },
+    .then(() =>
+      User.findOneAndUpdate(
+        { _id: req.user._id },
+        { $pull: { friend_requests: req.params.reqId } },
         { new: true }
       )
     )
@@ -44,7 +45,7 @@ const addFriend = function(req, res) {
 const rejReq = function(req, res) {
   User.findOneAndUpdate(
     { _id: req.user._id },
-    { $pull: { friend_requests: { id: req.params.reqId } } },
+    { $pull: { friend_requests: req.params.reqId } },
     { new: true }
   )
     .then(user => res.json(user))

@@ -1,4 +1,3 @@
-
 var mongoose = require("mongoose"),
   bcrypt = require("bcrypt"),
   Schema = mongoose.Schema;
@@ -26,7 +25,7 @@ var userSchema = new Schema({
   age: Number,
   hobby: String,
   responsibility: String,
-  friend_requests: [],
+  friend_requests: [{ type: Schema.Types.ObjectId, ref: "User" }],
   friends: [{ type: Schema.Types.ObjectId, ref: "User" }]
 });
 
