@@ -17,7 +17,7 @@
     "react-scripts": "3.0.1"
   },
   "scripts": {
-    "start": "nodemon ./bin/www",
+    "start": "node ./bin/www",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
@@ -38,7 +38,6 @@
     ]
   },
   "devDependencies": {
-    "bootstrap": "^4.3.1",
-    "nodemon": "^1.19.1"
+    "bootstrap": "^4.3.1"
   }
 }

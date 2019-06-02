@@ -1,7 +1,7 @@
 var router = require("express").Router();
-var authHandlers = require("../controllers/authСontroller.js"),
+var authHandlers = require("../controllers/authСontroller"),
   usersList = require("../controllers/usersController"),
-  friendsList = require("../controllers/friendsController.js"),
+  friendsList = require("../controllers/friendsController"),
   passport = require("passport"),
   loginRequired = passport.authenticate("jwt", { session: false });
 

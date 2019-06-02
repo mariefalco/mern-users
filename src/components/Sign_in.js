@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import { authService } from "../services/authService";
 
 class Sign_in extends Component {
   constructor() {
@@ -23,10 +22,10 @@ class Sign_in extends Component {
 
     const { email, password } = this.state;
 
-    axios
-      .post("/api/home/auth/sign_in", { email, password })
+    authService
+      .login(email, password)
       .then(result => {
-        localStorage.setItem("jwtToken", "Bearer " + result.data.token);
+        authService.setToken(result);
         this.setState({ message: "" });
         this.props.history.push("/");
       })

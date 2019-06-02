@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import { authService } from "../services/authService";
 
 class Create extends Component {
   constructor() {
@@ -24,12 +23,12 @@ class Create extends Component {
 
     const { name, email, password } = this.state;
 
-    axios
-      .post("/api/home/auth/register", { name, email, password })
-      .then(result => {
+    authService
+      .register(name, email, password)
+      .then(() => {
         this.setState({ message: "" });
         this.props.history.push("/auth/sign_in");
-      })      
+      })
       .catch(error => {
         this.setState({
           message: error.response.data.message
@@ -42,7 +41,7 @@ class Create extends Component {
     return (
       <div class="container">
         <form class="form-signin" onSubmit={this.onSubmit}>
-        {message !== "" && (
+          {message !== "" && (
             <div class="alert alert-warning alert-dismissible" role="alert">
               {message}
             </div>

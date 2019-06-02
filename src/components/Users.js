@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { authService } from "../services/authService";
+import { userService } from "../services/userService";
 
 class Users extends Component {
   constructor(props) {
@@ -12,11 +12,9 @@ class Users extends Component {
   }
 
   componentDidMount() {
-    axios.defaults.headers.common["Authorization"] = localStorage.getItem(
-      "jwtToken"
-    );
-    axios
-      .get("/api/home/users")
+    authService.getToken();
+    userService
+      .getUsers()
       .then(res => {
         this.setState({ users: res.data });
         console.log(this.state.users);
@@ -28,10 +26,7 @@ class Users extends Component {
       });
   }
 
-  logout = () => {
-    localStorage.removeItem("jwtToken");
-    window.location.reload();
-  };
+  logout = () => authService.logout();
 
   render() {
     return (
