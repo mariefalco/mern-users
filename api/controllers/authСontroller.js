@@ -9,7 +9,7 @@ function createToken(user) {
   });
 }
 
-const register = (req, res) => {
+const registration = (req, res) => {
   let newUser = User(req.body);
   newUser
     .save()
@@ -40,6 +40,6 @@ const signIn = (req, res) => {
 };
 
 module.exports = {
-  register,
+  registration,
   signIn
 };

@@ -6,27 +6,31 @@ var authHandlers = require("../controllers/authСontroller"),
   loginRequired = passport.authenticate("jwt", { session: false });
 
 // home
-router.get("/", loginRequired, usersList.getMe); // home page
+router.get("/", loginRequired, usersList.getMe);
 
 // auth
-router.post("/auth/register", authHandlers.register); // registration
-router.post("/auth/sign_in", authHandlers.signIn); // sing in
+router.post("/auth/registration", authHandlers.registration);
+router.post("/auth/sign_in", authHandlers.signIn);
 
 // users
-router.get("/users", loginRequired, usersList.getUsers); // view all users
+router.get("/users", loginRequired, usersList.getUsers);
 
-router.get("/users/:userId", loginRequired, usersList.getUser); // view user
-router.put("/users/:userId", loginRequired, usersList.updateUser); // update information about user
-router.delete("/users/:userId", loginRequired, usersList.deleteUser); // delete the user
+router.get("/users/:userId", loginRequired, usersList.getUser);
+router.put("/users/:userId", loginRequired, usersList.updateUser);
+router.delete("/users/:userId", loginRequired, usersList.deleteUser);
 
 // friends
-router.patch("/users/:userId", loginRequired, friendsList.addReq); // receive auth user id, who want to be friend
+router.patch("/users/:userId", loginRequired, friendsList.sendFriendRequest); // receive auth user id, who want to be friend
 
-router.get("/friend_requests", loginRequired, friendsList.getReqs); // view friend requests
+router.get("/friend_requests", loginRequired, friendsList.getMyFriendRequests);
 router.patch("/friend_requests&:reqId", loginRequired, friendsList.addFriend); // accept friend request
-router.delete("/friend_requests&:reqId", loginRequired, friendsList.rejReq); // reject friend request
+router.delete(
+  "/friend_requests&:reqId",
+  loginRequired,
+  friendsList.rejectFriendRequest
+);
 
-router.get("/friends", loginRequired, friendsList.getFriends); // view friends
-router.delete("/friends&:friendId", loginRequired, friendsList.deleteFriend); // delete the friend via id
+router.get("/friends", loginRequired, friendsList.getMyFriends);
+router.delete("/friends&:friendId", loginRequired, friendsList.deleteFriend);
 
 module.exports = router;

@@ -6,7 +6,7 @@ import "./index.css";
 import serviceWorker from "./serviceWorker";
 import App from "./App";
 import Sign_in from "./components/Sign_in";
-import Register from "./components/Register";
+import Registration from "./components/Registration";
 import Users from "./components/Users";
 import User from "./components/User";
 
@@ -18,7 +18,7 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={App} />
         <Route path="/auth/sign_in" component={Sign_in} />
-        <Route path="/auth/register" component={Register} />
+        <Route path="/auth/registration" component={Registration} />
         <Route exact path="/users" component={Users} />
         <Route path="/users/:userId" component={User} />
         <Route path="*" component={NotFound} />

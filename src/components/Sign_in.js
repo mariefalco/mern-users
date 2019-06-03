@@ -76,9 +76,9 @@ class Sign_in extends Component {
           </button>
           <p>
             Not a member?{" "}
-            <Link to="/auth/register">
+            <Link to="/auth/registration">
               <span class="glyphicon glyphicon-plus-sign" aria-hidden="true" />{" "}
-              Register here
+              Registration here
             </Link>
           </p>
         </form>

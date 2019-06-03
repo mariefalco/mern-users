@@ -24,7 +24,7 @@ class Create extends Component {
     const { name, email, password } = this.state;
 
     authService
-      .register(name, email, password)
+      .registration(name, email, password)
       .then(() => {
         this.setState({ message: "" });
         this.props.history.push("/auth/sign_in");
@@ -46,7 +46,7 @@ class Create extends Component {
               {message}
             </div>
           )}
-          <h2 class="form-signin-heading">Register</h2>
+          <h2 class="form-signin-heading">Registration</h2>
           <label for="inputName" class="sr-only">
             Name
           </label>
@@ -84,7 +84,7 @@ class Create extends Component {
             required
           />
           <button class="btn btn-lg btn-primary btn-block" type="submit">
-            Register
+            Registration
           </button>
           <p>
             Already a member?{" "}

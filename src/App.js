@@ -14,7 +14,7 @@ class App extends Component {
   componentDidMount() {
     authService.getToken();
     userService
-      .getHome()
+      .getMe()
       .then(res => {
         this.setState({ user: res.data });
         console.log(this.state.user);

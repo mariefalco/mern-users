@@ -17,13 +17,13 @@ const logout = () => {
 const login = (email, password) =>
   axios.post("/api/home/auth/sign_in", { email, password });
 
-const register = (name, email, password) =>
-  axios.post("/api/home/auth/register", { name, email, password });
+const registration = (name, email, password) =>
+  axios.post("/api/home/auth/registration", { name, email, password });
 
 export const authService = {
   setToken,
   getToken,
   login,
-  register,
+  registration,
   logout
 };

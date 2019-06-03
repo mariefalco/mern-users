@@ -1,7 +1,7 @@
 const mongoose = require("mongoose"),
   User = mongoose.model("User");
 
-const addReq = function(req, res) {
+const sendFriendRequest = function(req, res) {
   User.findOneAndUpdate(
     { _id: req.params.userId },
     { $push: { friend_requests: req.user._id } },
@@ -11,7 +11,7 @@ const addReq = function(req, res) {
     .catch(err => res.send(err));
 };
 
-const getReqs = function(req, res) {
+const getMyFriendRequests = function(req, res) {
   User.findById(req.user._id)
     .select("friend_requests -_id")
     .then(user => res.json(user))
@@ -26,23 +26,19 @@ const addFriend = function(req, res) {
   )
     .then(() =>
       User.findOneAndUpdate(
-        { _id: req.user._id },
-        { $pull: { friend_requests: req.params.reqId } },
-        { new: true }
-      )
-    )
-    .then(() =>
-      User.findOneAndUpdate(
         { _id: req.params.reqId },
         { $push: { friends: req.user._id } },
         { new: true }
       )
     )
+    .then(
+      () => rejectFriendRequest(req, res) // does it work?
+    )
     .then(() => res.json({ message: "The friend successfully added." }))
     .catch(err => res.send(err));
 };
 
-const rejReq = function(req, res) {
+const rejectFriendRequest = function(req, res) {
   User.findOneAndUpdate(
     { _id: req.user._id },
     { $pull: { friend_requests: req.params.reqId } },
@@ -52,7 +48,7 @@ const rejReq = function(req, res) {
     .catch(err => res.send(err));
 };
 
-const getFriends = function(req, res) {
+const getMyFriends = function(req, res) {
   User.findById(req.user._id)
     .populate("friends")
     .then(friends => res.json(friends))
@@ -77,10 +73,10 @@ const deleteFriend = function(req, res) {
 };
 
 module.exports = {
-  addReq,
-  getReqs,
+  sendFriendRequest,
+  getMyFriendRequests,
   addFriend,
-  rejReq,
-  getFriends,
+  rejectFriendRequest,
+  getMyFriends,
   deleteFriend
 };
