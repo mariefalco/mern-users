@@ -10,6 +10,7 @@ class Sign_in extends Component {
       password: "",
       message: ""
     };
+    
   }
   onChange = e => {
     const state = this.state;
@@ -25,13 +26,15 @@ class Sign_in extends Component {
     authService
       .login(email, password)
       .then(result => {
-        authService.setToken(result);
-        this.setState({ message: "" });
-        this.props.history.push("/");
+        if (!result.message) {
+          this.props.history.push("/");
+          window.location.reload();
+        }
+        this.setState({ message: result.message });
       })
       .catch(error => {
         this.setState({
-          message: error.response.data.message
+          message: error
         });
       });
   };

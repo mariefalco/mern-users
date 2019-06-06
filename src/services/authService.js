@@ -1,12 +1,9 @@
 import axios from "axios";
 
+const isLogged = () => !!localStorage.getItem("jwtToken");
+
 const setToken = result => {
   localStorage.setItem("jwtToken", "Bearer " + result.data.token);
-};
-const getToken = () => {
-  axios.defaults.headers.common["Authorization"] = localStorage.getItem(
-    "jwtToken"
-  );
 };
 
 const logout = () => {
@@ -15,14 +12,23 @@ const logout = () => {
 };
 
 const login = (email, password) =>
-  axios.post("/api/home/auth/sign_in", { email, password });
+  axios
+    .post("/api/home/auth/sign_in", { email, password })
+    .then(result => {
+      setToken(result);
+      return { message: "" };
+    })
+    .catch(error => {
+      return {
+        message: error.response.data.message
+      };
+    });
 
 const registration = (name, email, password) =>
   axios.post("/api/home/auth/registration", { name, email, password });
 
 export const authService = {
-  setToken,
-  getToken,
+  isLogged,
   login,
   registration,
   logout
