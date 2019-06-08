@@ -33,8 +33,9 @@ var passportMiddleware = require("./api/middleware/passport");
 passport.use(passportMiddleware);
 
 app.use(express.static(path.join(__dirname, "build")));
+
 const routes = require("./api/routes/usersRoutes"); //importing route
-app.use("/api/home", routes);
+app.use("/api", routes);
 
 //invalid route
 app.use(function(req, res) {

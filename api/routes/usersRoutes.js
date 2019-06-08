@@ -11,6 +11,8 @@ router.get("/", loginRequired, usersList.getMe);
 // auth
 router.post("/auth/registration", authHandlers.registration);
 router.post("/auth/sign_in", authHandlers.signIn);
+router.patch("/auth/refresh_token", authHandlers.refreshToken);
+router.patch("/auth/delete_token", authHandlers.deleteToken);
 
 // users
 router.get("/users", loginRequired, usersList.getUsers);

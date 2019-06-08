@@ -15,6 +15,7 @@ class Users extends Component {
       .getUsers()
       .then(res => {
         this.setState({ users: res.data });
+        console.log(this.state.users);
       })
       .catch(error => {
         console.log(error);
@@ -22,7 +23,7 @@ class Users extends Component {
   }
 
   render() {
-    return (      
+    return (
       <div class="container">
         <div class="panel panel-default">
           <div class="panel-heading">

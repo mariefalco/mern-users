@@ -15,6 +15,7 @@ class User extends Component {
       .getUser(userId)
       .then(res => {
         this.setState({ user: res.data });
+        console.log(this.state.user);
       })
       .catch(error => {
         console.log(error);
