@@ -25,7 +25,11 @@ router.delete("/users/:userId", loginRequired, usersList.deleteUser);
 router.patch("/users/:userId", loginRequired, friendsList.sendFriendRequest); // receive auth user id, who want to be friend
 
 router.get("/friend_requests", loginRequired, friendsList.getMyFriendRequests);
-router.patch("/friend_requests&:reqId", loginRequired, friendsList.addFriend); // accept friend request
+router.patch(
+  "/friend_requests&:reqId",
+  loginRequired,
+  friendsList.acceptFriendRequest
+);
 router.delete(
   "/friend_requests&:reqId",
   loginRequired,
