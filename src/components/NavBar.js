@@ -18,6 +18,11 @@ const NavBar = () => (
                 Users
               </Link>
             </li>
+            <li class="nav-item">
+              <Link to="/chat" className="nav-item nav-link">
+                Chat
+              </Link>
+            </li>
           </ul>
         </div>
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">

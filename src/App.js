@@ -12,6 +12,8 @@ import User from "./components/User";
 import FriendRequests from "./components/FriendRequests";
 import Friends from "./components/Friends";
 
+import Chat from "./components/Chat";
+
 import NavBar from "./components/NavBar";
 import NotFound from "./components/NotFound";
 
@@ -37,6 +39,8 @@ function App() {
             component={FriendRequests}
           />
           <PrivateRoute exact path="/friends" component={Friends} />
+
+          <PrivateRoute exact path="/chat" component={Chat} />
 
           <Route path="*" component={NotFound} />
         </Switch>

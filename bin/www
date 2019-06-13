@@ -19,7 +19,14 @@ app.set("port", port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = http.Server(app);
+
+const io = require("socket.io")(server);
+global.io = io;
+
+io.on("connection", () => {
+  console.log("a user is connected");
+});
 
 /**
  * Listen on provided port, on all network interfaces.
