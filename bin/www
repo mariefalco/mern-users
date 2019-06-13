@@ -22,12 +22,18 @@ app.set("port", port);
 var server = http.Server(app);
 
 const io = require("socket.io")(server);
-global.io = io;
 
 io.on("connection", () => {
   console.log("a user is connected");
 });
 
+const routes = require("../api/routes/usersRoutes")(io); //importing route
+app.use("/api", routes);
+
+//invalid route
+app.use(function(req, res) {
+  res.status(404).send({ url: req.originalUrl + " not found" });
+});
 /**
  * Listen on provided port, on all network interfaces.
  */

@@ -34,12 +34,4 @@ passport.use(passportMiddleware);
 
 app.use(express.static(path.join(__dirname, "build")));
 
-const routes = require("./api/routes/usersRoutes"); //importing route
-app.use("/api", routes);
-
-//invalid route
-app.use(function(req, res) {
-  res.status(404).send({ url: req.originalUrl + " not found" });
-});
-
 module.exports = app;
