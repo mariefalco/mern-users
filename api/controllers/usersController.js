@@ -14,6 +14,7 @@ const getUsers = function(req, res) {
 
 const getUser = function(req, res) {
   User.findById(req.params.userId)
+    .populate("friends")
     .then(user => res.json(user))
     .catch(err => res.send(err));
 };

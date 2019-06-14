@@ -13,12 +13,12 @@ const sendFriendRequest = function(req, res) {
 
 const getMyFriendRequests = function(req, res) {
   User.findById(req.user._id)
-    .select("friend_requests -_id")
-    .then(user => res.json(user))
+    .populate("friend_requests")
+    .then(user => res.json(user.friend_requests))
     .catch(err => res.send(err));
 };
 
-const addFriend = function(req, res) {
+const acceptFriendRequest = function(req, res) {
   User.findOneAndUpdate(
     { _id: req.user._id },
     { $push: { friends: req.params.reqId } },
@@ -31,9 +31,7 @@ const addFriend = function(req, res) {
         { new: true }
       )
     )
-    .then(
-      () => rejectFriendRequest(req, res) // does it work?
-    )
+    .then(() => rejectFriendRequest(req, res))
     .then(() => res.json({ message: "The friend successfully added." }))
     .catch(err => res.send(err));
 };
@@ -51,7 +49,7 @@ const rejectFriendRequest = function(req, res) {
 const getMyFriends = function(req, res) {
   User.findById(req.user._id)
     .populate("friends")
-    .then(friends => res.json(friends))
+    .then(user => res.json(user.friends))
     .catch(err => res.send(err));
 };
 
@@ -75,7 +73,7 @@ const deleteFriend = function(req, res) {
 module.exports = {
   sendFriendRequest,
   getMyFriendRequests,
-  addFriend,
+  acceptFriendRequest,
   rejectFriendRequest,
   getMyFriends,
   deleteFriend

@@ -1,32 +1,30 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { userService } from "../services/userService";
 import { friendService } from "../services/friendService";
 
-class Users extends Component {
+class Friends extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: []
+      friends: []
     };
   }
 
   componentDidMount() {
-    userService
-      .getUsers()
+    friendService
+      .getMyFriends()
       .then(res => {
-        this.setState({ users: res.data });
-        console.log(this.state.users);
+        this.setState({ friends: res.data });
+        console.log(this.state.friends);
       })
       .catch(error => {
         console.log(error);
       });
   }
 
-  sendFriendRequest = e => {
-    e.preventDefault();
+  deleteFriend = e => {
     friendService
-      .sendFriendRequest(e.target.id)
+      .deleteFriend(e.target.id)
       .then(res => {
         console.log(res);
       })
@@ -40,7 +38,7 @@ class Users extends Component {
       <div class="container">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title">USERS LIST</h3>
+            <h3 class="panel-title">FRIENDS LIST</h3>
           </div>
           <div class="panel-body">
             <div class="row border-bottom font-weight-bold">
@@ -48,7 +46,7 @@ class Users extends Component {
               <div class="col">Email</div>
               <div class="col" />
             </div>
-            {this.state.users.map(user => (
+            {this.state.friends.map(user => (
               <div class="row border-top">
                 <div class="col">
                   <Link to={`/users/${user._id}`}>{user.name}</Link>
@@ -58,10 +56,10 @@ class Users extends Component {
                   <form
                     id={user._id}
                     class="form-signin"
-                    onSubmit={this.sendFriendRequest}
+                    onSubmit={this.deleteFriend}
                   >
-                    <button type="submit" class="btn btn-secondary btn-sm">
-                      Send friend request
+                    <button type="submit" class="btn btn-danger btn-sm">
+                      Delete
                     </button>
                   </form>
                 </div>
@@ -74,4 +72,4 @@ class Users extends Component {
   }
 }
 
-export default Users;
+export default Friends;

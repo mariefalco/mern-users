@@ -11,6 +11,8 @@ router.get("/", loginRequired, usersList.getMe);
 // auth
 router.post("/auth/registration", authHandlers.registration);
 router.post("/auth/sign_in", authHandlers.signIn);
+router.patch("/auth/refresh_token", authHandlers.refreshToken);
+router.patch("/auth/delete_token", authHandlers.deleteToken);
 
 // users
 router.get("/users", loginRequired, usersList.getUsers);
@@ -23,7 +25,11 @@ router.delete("/users/:userId", loginRequired, usersList.deleteUser);
 router.patch("/users/:userId", loginRequired, friendsList.sendFriendRequest); // receive auth user id, who want to be friend
 
 router.get("/friend_requests", loginRequired, friendsList.getMyFriendRequests);
-router.patch("/friend_requests&:reqId", loginRequired, friendsList.addFriend); // accept friend request
+router.patch(
+  "/friend_requests&:reqId",
+  loginRequired,
+  friendsList.acceptFriendRequest
+);
 router.delete(
   "/friend_requests&:reqId",
   loginRequired,

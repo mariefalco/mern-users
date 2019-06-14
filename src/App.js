@@ -9,6 +9,8 @@ import Sign_in from "./components/Sign_in";
 import Registration from "./components/Registration";
 import Users from "./components/Users";
 import User from "./components/User";
+import FriendRequests from "./components/FriendRequests";
+import Friends from "./components/Friends";
 
 import NavBar from "./components/NavBar";
 import NotFound from "./components/NotFound";
@@ -24,9 +26,18 @@ function App() {
             path="/auth/registration"
             component={Registration}
           />
+
           <PrivateRoute exact path="/" component={Home} />
           <PrivateRoute exact path="/users" component={Users} />
           <PrivateRoute path="/users/:userId" component={User} />
+
+          <PrivateRoute
+            exact
+            path="/friend_requests"
+            component={FriendRequests}
+          />
+          <PrivateRoute exact path="/friends" component={Friends} />
+
           <Route path="*" component={NotFound} />
         </Switch>
       </div>
