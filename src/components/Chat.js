@@ -14,10 +14,6 @@ class Chat extends Component {
   }
 
   componentDidMount() {
-    this.getMessages();
-  }
-
-  getMessages = () => {
     chatService
       .getMessages()
       .then(res => {
@@ -37,20 +33,16 @@ class Chat extends Component {
 
   sendMessage = e => {
     e.preventDefault();
-    chatService
-      .sendMessage(this.state.message)
-      .then(res => {
-        this.setState({ message: "" });
-        console.log(res);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    socket.emit("new message", {
+      body: this.state.message,
+      authorId: localStorage.getItem("id")
+    });
+    this.setState({ message: "" });
   };
 
   render() {
     const { message } = this.state;
-    socket.on("message", this.getMessages);
+    socket.on("chat messages", mess => this.setState({ messages: mess }));
     return (
       <div class="container">
         <div class="panel panel-default">
