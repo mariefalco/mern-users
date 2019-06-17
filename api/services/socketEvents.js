@@ -1,11 +1,8 @@
 const Message = require("../models/message");
 
 module.exports = function(io) {
-  // Set socket.io listeners.
   io.on("connection", socket => {
-    //console.log('a user connected');
-
-    socket.on("new message", message => {
+    socket.on("NEW_MESSAGE", message => {
       var newMessage = new Message({
         body: message.body,
         author: message.authorId
@@ -19,15 +16,11 @@ module.exports = function(io) {
               select: "name"
             })
             .then(messages => {
-              io.emit("chat messages", messages);
+              io.emit("CHAT_MESSAGES", messages);
             })
-            .catch(err => console.log(err));
+            .catch(error => console.log(error));
         })
-        .catch(err => console.log(err));
-    });
-
-    socket.on("disconnect", () => {
-      //console.log('user disconnected');
+        .catch(error => console.log(error));
     });
   });
 };

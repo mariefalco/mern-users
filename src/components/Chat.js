@@ -23,7 +23,12 @@ class Chat extends Component {
       .catch(error => {
         console.log(error);
       });
-  };
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
 
   onChange = e => {
     const state = this.state;
@@ -31,9 +36,13 @@ class Chat extends Component {
     this.setState(state);
   };
 
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  };
+
   sendMessage = e => {
     e.preventDefault();
-    socket.emit("new message", {
+    socket.emit("NEW_MESSAGE", {
       body: this.state.message,
       authorId: localStorage.getItem("id")
     });
@@ -42,46 +51,64 @@ class Chat extends Component {
 
   render() {
     const { message } = this.state;
-    socket.on("chat messages", mess => this.setState({ messages: mess }));
+    socket.on("CHAT_MESSAGES", messages =>
+      this.setState({ messages: messages })
+    );
     return (
       <div class="container">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <form onSubmit={this.sendMessage}>
-              <div class="form-group row">
-                <div class="col-sm-10">
+        <div class="panel panel-primary">
+          <div class="panel panel-default">
+            <div class="panel-body chat-page">
+              <ul class="chat">
+                {this.state.messages.map(message => (
+                  <li
+                    class={`text-${
+                      message.author._id === localStorage.getItem("id")
+                        ? "right"
+                        : "left"
+                    } clearfix`}
+                  >
+                    <div class="chat-body clearfix">
+                      <div class="header">
+                        <strong class="primary-font">
+                          <Link to={`/users/${message.author._id}`}>
+                            {message.author.name}
+                          </Link>
+                        </strong>
+                      </div>
+
+                      <p>{message.body}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <div
+                ref={el => {
+                  this.messagesEnd = el;
+                }}
+              />
+            </div>
+            <div class="panel-footer">
+              <form onSubmit={this.sendMessage}>
+                <div class="input-group">
                   <input
                     autoFocus
                     type="text"
                     class="form-control"
-                    placeholder="Write a message"
+                    placeholder="Type your message here..."
                     name="message"
                     value={message}
                     onChange={this.onChange}
                     required
                   />
+                  <span class="input-group-btn">
+                    <button type="submit" class="btn btn-success">
+                      Send
+                    </button>
+                  </span>
                 </div>
-                <div class="col-sm-2">
-                  <button type="submit" class="btn btn-success">
-                    Send
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="panel-body" id="messages">
-            {this.state.messages.map(message => (
-              <div class="row border-top">
-                <div class="col-sm-2">
-                  <Link to={`/users/${message.author._id}`}>
-                    {message.author.name}
-                  </Link>
-                </div>
-                <div class="col-sm-10">
-                  <p>{message.body}</p>
-                </div>
-              </div>
-            ))}
+              </form>
+            </div>
           </div>
         </div>
       </div>
