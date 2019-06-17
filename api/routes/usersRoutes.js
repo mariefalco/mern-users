@@ -2,6 +2,7 @@ var router = require("express").Router();
 var authHandlers = require("../controllers/authСontroller"),
   usersList = require("../controllers/usersController"),
   friendsList = require("../controllers/friendsController"),
+  chatController = require("../controllers/chatСontroller"),
   passport = require("passport"),
   loginRequired = passport.authenticate("jwt", { session: false });
 
@@ -38,5 +39,8 @@ router.delete(
 
 router.get("/friends", loginRequired, friendsList.getMyFriends);
 router.delete("/friends&:friendId", loginRequired, friendsList.deleteFriend);
+
+// chat
+router.get("/chat", loginRequired, chatController.getMessages);
 
 module.exports = router;
