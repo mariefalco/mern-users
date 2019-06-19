@@ -3,5 +3,5 @@ module.exports = {
   refreshTokenSecret: "per-aspera-ad-inferi",
   tokenLife: 900,
   refreshTokenLife: 86400,
-  db: "mongodb://localhost/Usersdb"
+  db: "mongodb://mongo:27017/Usersdb"
 };
